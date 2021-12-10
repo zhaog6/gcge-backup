@@ -11,15 +11,20 @@ OBJ3      = ex3.o ../test/test_eig_sol_gcg.o ../src/ops.o ../src/ops_eig_sol_gcg
 LINKOBJ3  = ex3.o ../test/test_eig_sol_gcg.o ../src/ops.o ../src/ops_eig_sol_gcg.o ../src/ops_lin_sol.o  ../src/ops_multi_vec.o ../src/ops_orth.o ../app/app_lapack.o ../app/app_slepc.o
 
 
-LIBS     = $(LIBSLEPC) $(LIBPETSC) 
+LIBS     = $(LIBSLEPC) $(LIBPETSC)
 INCS     = -I../src -I../app
 CXXINCS  = 
 BIN1     = ex1 
 BIN2     = ex2
 BIN3     = ex3
 CXXFLAGS = $(CXXINCS) -O2 -Wall -fPIC -g
-CFLAGS   = $(INCS) -O2 -Wall -fPIC -g -fopenmp 
+CFLAGS   = $(INCS) -O2 -Wall -fPIC -g
 RM       = rm -f
+ifeq ($(UNAME), Darwin)
+	CFLAGS +=
+else
+	CFLAGS += -fopenmp
+endif
 
 
 all: all-before $(BIN1) $(BIN2) $(BIN3) all-after

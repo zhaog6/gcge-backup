@@ -10,8 +10,13 @@ INCS     = -I../src -I../app
 CXXINCS  = 
 BIN      = TestGCGE
 CXXFLAGS = $(CXXINCS) -O2 -Wall -fPIC -g
-CFLAGS   = $(INCS) -O2 -Wall -fPIC -g -fopenmp#-fopenmp 
+CFLAGS   = $(INCS) -O2 -Wall -fPIC -g
 RM       = rm -f
+ifeq ($(UNAME), Darwin)
+	CFLAGS +=
+else
+	CFLAGS += -fopenmp
+endif
 
 .PHONY: all all-before all-after clean clean-custom
 
